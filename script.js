@@ -18,6 +18,19 @@ const svg = d3.select("#chart-container")
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
+//Create tooltip div
+const tooltip = d3.select("body")
+  .append("div")
+  .attr("class", "tooltip");
+
+//Create a second tooltip div for raw date
+const tooltipRawDate = d3.select("body")
+  .append("div")
+  .attr("class", "tooltip");
+
+
+
 //Load and process the data
 d3.csv("NTDOY.csv").then(data =>{
     const parseDate = d3.timeParse("%m/%d/%Y");
