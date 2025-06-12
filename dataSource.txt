@@ -1,0 +1,1 @@
+source: https://www.marketwatch.com/investing/stock/NTDOY/download-data?startDate=1/1/2020&endDate=06/11/2025
