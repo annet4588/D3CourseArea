@@ -49,11 +49,17 @@ y.domain([0, d3.max(data, d => d.Close)]);
 
 // Add x axis
 svg.append("g")
+  .attr("class", "x-axis")
   .attr("transform", `translate(0, ${height})`)
+  .style("font-size", "14px")
   .call(d3.axisBottom(x)
-      .ticks(d3.timeMonth.every(1))
-      .tickFormat(d3.timeFormat("%b %Y"))
-  );
+      .tickValues(x.ticks(d3.timeMonth.every(1)))
+      .tickFormat(d3.timeFormat("%b %Y")))
+  .selectAll(" .tick line")
+  .style("stroke-opacity", 1)
+svg.selectAll(".tick text")
+   .attr("fill", "#777");
+
 
 // Add y axis, append a new group - "g" to svg
 svg.append("g")
@@ -91,4 +97,14 @@ svg.append("path")
   .attr("stroke-width", 1)
   .attr("d", line);
 
+// Add a circle element - the element that follows the mouse around
+const circle = svg.append("circle")
+  .attr("r", 0)
+  .attr("fill", "red")
+  .style("stroke", "white")
+  .attr("opacity", 0.7)
+  .style("pointer-events", "none");
+
+
+ 
 });
