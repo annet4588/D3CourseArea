@@ -120,7 +120,22 @@ const tooltipLineY = svg.append("line")
   .attr("stroke-width", 1)
   .attr("stroke-dasharray", "2,2");
 
+// Create a listening rectangle
+const listeningRect = svg.append("rect")
+  .attr("width", width)
+  .attr("height", height);
 
+  //Create a mouse move function
+listeningRect.on("mousemove", function(event){
+    const [xCoord] = d3.pointer(event, this);
+    const bisectDate = d3.bisector(d => d.Date).left;
+    const x0 = x.invert(xCoord);
+    const d0 = data[i - 1];
+    const d1 = data[i];
+    const d = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
+    const xPos = x(d.Date);
+    const yPos = y(d.Close);
+})
 
  
 });
