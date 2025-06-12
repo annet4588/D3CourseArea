@@ -105,6 +105,22 @@ const circle = svg.append("circle")
   .attr("opacity", 0.7)
   .style("pointer-events", "none");
 
+// Add red dashed lines extending from circle to the date and value
+const tooltipLineX = svg.append("line")
+  .attr("class", "tooltip-line")
+  .attr("id", "tooltip-line-x")
+  .style("stroke", "red")
+  .attr("stroke-width", 1)
+  .attr("stroke-dasharray", "2,2");
+
+const tooltipLineY = svg.append("line")
+  .attr("class", "tooltip-line")
+  .attr("id", "tooltip-line-y")
+  .style("stroke", "red")
+  .attr("stroke-width", 1)
+  .attr("stroke-dasharray", "2,2");
+
+
 
  
 });
