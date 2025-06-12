@@ -125,7 +125,7 @@ const listeningRect = svg.append("rect")
   .attr("width", width)
   .attr("height", height);
 
-  //Create a mouse move function
+//Create a mouse move function
 listeningRect.on("mousemove", function(event){
     const [xCoord] = d3.pointer(event, this);
     const bisectDate = d3.bisector(d => d.Date).left;
@@ -136,6 +136,14 @@ listeningRect.on("mousemove", function(event){
     const xPos = x(d.Date);
     const yPos = y(d.Close);
 })
+
+// Update the circle position
+circle.attr("cx", xPos).attr("cy", yPos);
+
+// Add transition for the circle radius to being able to see the circle
+circle.transition()
+  .duration(50)
+  .attr("r", 5);
 
  
 });
