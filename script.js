@@ -214,6 +214,55 @@ const sliderRange = d3
   .default([d3.min(data, d => d.Date), d3.max(data, d=> d.Date)])
   .fill('#85bb65');
 
+// Update if slider changes
+sliderRange.on('onchange', val => {
+  // Set new domain for x scale
+  x.domain(val);
+
+  //Filter data based on slider values min and max
+  const filteredData = data.filter(d => d.Date >= val[0] && d.Date <= val[1]);
+
+  // Update the line and are to new domain
+  svg.select(".line").attr("d", line(filteredData));
+  svg.select(".area").attr("d", area(filteredData));
+
+  // Set new domain for y scale based on new data
+  y.domain([0, d3.max(filteredData, d => d.Close)]);
+
+  // Update y axis
+  svg.select(".x-axis")
+    .transition()
+    .duration(300) //transition duration in ms
+    .call(d3.axisBottom(x)
+      .tickValues(x.ticks(d3.timeMonth.every(1)))
+      .tickFormat(d3.timeFormat("%b, %Y")));
+  
+  // Update y axis
+  svg.select(".y-axis")
+    .transition()
+    .duration(300) //transition duration in ms
+    .call(d3.axisRight(y)
+      .ticks(10)
+      .tickFormat(d => {
+        if ( d<= 0) return "";
+        return `$${d.toFixed(2)}`;
+    }));
+})
+
+// Clear old slider content
+d3.select("#slider-range").selectAll("*").remove();
+
+// Add the slider to DOM
+const gRange = d3 
+  .select("#slider-range")
+  .append("svg")
+  .attr("width", 500)
+  .attr("height", 100)
+  .append("g")
+  .attr("transform", "translate(90, 30)");
+
+gRange.call(sliderRange);
+
 // Add a chart title
 svg.append("text")
   .attr("class", "chart-title")
