@@ -203,5 +203,24 @@ listeningRect.on("mouseleave", function(event){
     tooltipLineY.style("display", "none");
 });
 
+// Add a chart title
+svg.append("text")
+  .attr("class", "chart-title")
+  .attr("x", margin.left - 80)
+  .attr("y", margin.top - 100)
+  .style("font-size", "20px")
+  .style("font-weight", "bold")
+  .style("font-family", "sans-serif")
+  .text("Nintendo Co., Ltd. (NTDOY");
+
+//Add the source credit
+svg.append("text")
+  .attr("class", "source-credit")
+  .attr("x", width - 315)
+  .attr("y", height + margin.bottom - 7)
+  .style("font-size", "12px")
+  .style("font-family", "sans-serif")
+  .text("Source: https://www.marketwatch.com/investing/stock/NTDOY");
+
 });
 });
