@@ -29,6 +29,25 @@ const tooltipRawDate = d3.select("body")
   .append("div")
   .attr("class", "tooltip");
 
+// Create our gradient  
+const gradient = svg.append("defs")
+  .append("linearGradient")
+  .attr("id", "gradient")
+  .attr("x1", "0%")
+  .attr("x2", "0%")
+  .attr("y1", "0%")
+  .attr("y2", "100%")
+  .attr("spreadMethod", "pad");
+
+gradient.append("stop")
+  .attr("offset", "0%")
+  .attr("stop-color", "#85bb65")
+  .attr("stop-opacity", 1);
+
+gradient.append("stop")
+  .attr("offset", "100%")
+  .attr("stop-color", "#85bb65")
+  .attr("stop-opacity", 0);
 
 
 //Load and process the data
@@ -38,8 +57,10 @@ d3.csv("NTDOY.csv").then(data =>{
         d.Date = parseDate(d.Date);
         d.Close = +d.Close;
     });
+      // Sort data by ascending date
+    data.sort((a, b) => a.Date - b.Date);
 
-    console.log(data.map(d=>d.Date));
+    // console.log(data.map(d=>d.Date));
 
 
 // Set domains for x and y scales
@@ -130,12 +151,13 @@ listeningRect.on("mousemove", function(event){
     const [xCoord] = d3.pointer(event, this);
     const bisectDate = d3.bisector(d => d.Date).left;
     const x0 = x.invert(xCoord);
+    const i = bisectDate(data, x0, 1);
     const d0 = data[i - 1];
     const d1 = data[i];
     const d = x0 - d0.Date > d1.Date - x0 ? d1 : d0;
     const xPos = x(d.Date);
     const yPos = y(d.Close);
-})
+
 
 // Update the circle position
 circle.attr("cx", xPos).attr("cy", yPos);
@@ -144,6 +166,31 @@ circle.attr("cx", xPos).attr("cy", yPos);
 circle.transition()
   .duration(50)
   .attr("r", 5);
-
+//Update the position of the red lines
+tooltipLineX.style("display", "block")
+            .attr("x1", xPos)
+            .attr("x2", xPos)
+            .attr("y1", 0)
+            .attr("y2", height)
  
+tooltipLineY.style("display", "block")
+            .attr("y1", yPos)
+            .attr("y2", yPos)
+            .attr("x1", 0)
+            .attr("x2", width)
+
+// Add the tooptip to the page
+tooltip
+    .style("display", "block")
+    .style("left", `${xPos + margin.left + 20}px`)
+    .style("top", `${yPos + margin.top}px`)
+    .html(`$${d.Close !== undefined ? d.Close.toFixed(2) : 'N/A'}`);
+
+tooltipRawDate
+    .style("display", "block")
+    .style("left", `${xPos + margin.left + 20}px`)
+    .style("top", `${yPos + margin.top + 30}px`)
+    .html(`${d.Date !== undefined ? d3.timeFormat("%Y/%m/%d")(d.Date) : 'N/A'}`);
+
+});
 });
