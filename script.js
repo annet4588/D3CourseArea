@@ -182,14 +182,14 @@ tooltipLineY.style("display", "block")
 // Add the tooptip to the page
 tooltip
     .style("display", "block")
-    .style("left", `${xPos + margin.left + 20}px`)
-    .style("top", `${yPos + margin.top}px`)
+    .style("left", `${width + 90}px`)
+    .style("top", `${yPos + 68}px`)
     .html(`$${d.Close !== undefined ? d.Close.toFixed(2) : 'N/A'}`);
 
 tooltipRawDate
     .style("display", "block")
-    .style("left", `${xPos + margin.left + 20}px`)
-    .style("top", `${yPos + margin.top + 30}px`)
+    .style("left", `${xPos + 60}px`)
+    .style("top", `${height + 53}px`)
     .html(`${d.Date !== undefined ? d3.timeFormat("%Y/%m/%d")(d.Date) : 'N/A'}`);
 
 });
