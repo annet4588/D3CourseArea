@@ -106,7 +106,7 @@ svg.append("path")
   .datum(data)
   .attr("class", "area")
   .attr("d", area)
-  .style("fill", "#85bb65")
+  .style("fill", "url(#gradient)")
   .style("opacity", .5);
 
 //Add the line path
