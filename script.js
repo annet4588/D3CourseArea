@@ -192,5 +192,16 @@ tooltipRawDate
     .style("top", `${height + 53}px`)
     .html(`${d.Date !== undefined ? d3.timeFormat("%Y/%m/%d")(d.Date) : 'N/A'}`);
 
+//Create a mouse leave function
+listeningRect.on("mouseleave", function(event){
+    circle.transition().duration(50).attr("r",0);
+    tooltip.style("display", "none");
+    tooltipRawDate.style("display", "none");
+    tooltipLineX.attr("x1", 0).attr("x2", 0);
+    tooltipLineY.attr("y1", 0).attr("y2", 0);
+    tooltipLineX.style("display", "none");
+    tooltipLineY.style("display", "none");
+});
+
 });
 });
