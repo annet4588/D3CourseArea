@@ -203,6 +203,17 @@ listeningRect.on("mouseleave", function(event){
     tooltipLineY.style("display", "none");
 });
 
+//Define the slider
+const sliderRange = d3 
+  .sliderBottom()
+  .min(d3.min(data, d => d.Date))
+  .max(d3.max(data, d => d.Date))
+  .width(300)
+  .tickFormat(d3.timeFormat("%Y/%m/%d"))
+  .ticks(3)
+  .default([d3.min(data, d => d.Date), d3.max(data, d=> d.Date)])
+  .fill('#85bb65');
+
 // Add a chart title
 svg.append("text")
   .attr("class", "chart-title")
